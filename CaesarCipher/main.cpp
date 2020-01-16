@@ -12,14 +12,16 @@ int main()
     std::cout << "\nProcedurally Shifting Code\n";
     std::cout << "[DECRYPTION] Caesar Code -> Alphabet:\n";
 
-    for (size_t i = 0; i < 5; i++)
+    int Shift = SIZE;
+
+    for (size_t i = 0; i < Shift; i++)
     {
         std::cout << "[SHIFT RIGHT " << i << "]: " << CaesarCipher::Decrypt(i, true, Answer) << std::endl;
     }
 
     std::cout << std::endl;
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < Shift; i++)
     {
         std::cout << "[SHIFT LEFT  " << i << "]: " << CaesarCipher::Decrypt(i, false, Answer) << std::endl;
 
@@ -28,14 +30,14 @@ int main()
     std::cout << "\nProcedurally Shifting Code\n";
     std::cout << "[ENCRYPTION] Alphabet -> Caesar Code:\n";
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < Shift; i++)
     {
         std::cout << "[SHIFT RIGHT " << i << "]: " << CaesarCipher::Encrypt(i, true, Answer) << std::endl;
     }
 
     std::cout << std::endl;
 
-    for (size_t i = 0; i < 5; i++)
+    for (size_t i = 0; i < Shift; i++)
     {
         std::cout << "[SHIFT LEFT  " << i << "]: " << CaesarCipher::Encrypt(i, false, Answer) << std::endl;
     }
