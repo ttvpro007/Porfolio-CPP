@@ -50,7 +50,7 @@ void FSudoku::FillBox(int StartIndex)
 	{
 		for (size_t j = 0; j < BOX_GRID_SIZE; j++)
 		{
-			Table[i + BOX_GRID_SIZE * StartIndex][j + BOX_GRID_SIZE * StartIndex] = Box[i * BOX_GRID_SIZE + j];
+			Table[(int)i + BOX_GRID_SIZE * StartIndex][(int)j + BOX_GRID_SIZE * StartIndex] = Box[i * BOX_GRID_SIZE + j];
 		}
 	}
 }
@@ -66,7 +66,9 @@ void FSudoku::FillDiagonal()
 bool FSudoku::FillTable(int Row, int Col)
 {
 	if (!hasBlankSpace())
+	{
 		return true;
+	}
 
 	if (Row < TABLE_GRID_SIZE - 1 && Col >= TABLE_GRID_SIZE)
 	{
@@ -82,11 +84,13 @@ bool FSudoku::FillTable(int Row, int Col)
 		if (CanUseNumber(Row, Col, num))
 		{
 			Table[Row][Col] = num;
+			Solution[Row][Col] = num;
 
 			if (FillTable(Row, Col + 1))
 				return true;
 
 			Table[Row][Col] = '\0';
+			Solution[Row][Col] = '\0';
 		}
 	}
 
@@ -233,6 +237,38 @@ void FSudoku::PrintSudoku()
 				std::cout << Table[i][j];
 			else
 				std::cout << Table[i][j] << ".";
+
+			if (j == TABLE_GRID_SIZE - 1)
+				std::cout << "||";
+		}
+
+		std::cout << std::endl;
+	}
+}
+
+void FSudoku::PrintSolution()
+{
+	for (size_t i = 0; i < TABLE_GRID_SIZE; i++)
+	{
+		if (i != 0 && i % BOX_GRID_SIZE == 0)
+		{
+			for (size_t i = 0; i < 2 * ((BOX_GRID_SIZE + 1) + TABLE_GRID_SIZE) - BOX_GRID_SIZE; i++)
+			{
+				std::cout << "=";
+			}
+
+			std::cout << std::endl;
+		}
+
+		for (size_t j = 0; j < TABLE_GRID_SIZE; j++)
+		{
+			if (j % BOX_GRID_SIZE == 0)
+				std::cout << "||";
+
+			if (BOX_GRID_SIZE - j % BOX_GRID_SIZE == 1)
+				std::cout << Solution[i][j];
+			else
+				std::cout << Solution[i][j] << ".";
 
 			if (j == TABLE_GRID_SIZE - 1)
 				std::cout << "||";

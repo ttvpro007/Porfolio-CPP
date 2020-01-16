@@ -23,6 +23,7 @@ public:
 	~FSudoku();
 
 private:
+	char Solution[TABLE_GRID_SIZE][TABLE_GRID_SIZE] = {};
 	char Table[TABLE_GRID_SIZE][TABLE_GRID_SIZE] = {};
 	char Box[TABLE_GRID_SIZE] = {};
 
@@ -49,5 +50,6 @@ private:
 public:
 	void Generate(EMode);
 	void PrintSudoku();
+	void PrintSolution();
 };
 
