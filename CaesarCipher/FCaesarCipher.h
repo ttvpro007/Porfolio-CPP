@@ -21,6 +21,6 @@ private:
 
 private:
 	static char AlphabetLetters[SIZE];
-	static int Code;
+	//static int Code;
 };
 

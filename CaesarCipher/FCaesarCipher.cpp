@@ -1,7 +1,7 @@
 #include "FCaesarCipher.h"
 
 char CaesarCipher::AlphabetLetters[SIZE] = ALPHABET;
-int CaesarCipher::Code = 999;
+//int CaesarCipher::Code = 999;
 
 std::string CaesarCipher::Encrypt(int Shift, bool bIsCipherShiftRight, std::string Answer)
 {
