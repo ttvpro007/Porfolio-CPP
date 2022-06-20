@@ -3,7 +3,7 @@
 #include <random>
 #include <chrono>
 
-#define BOX_GRID_SIZE 5
+#define BOX_GRID_SIZE 4
 #define TABLE_GRID_SIZE BOX_GRID_SIZE * BOX_GRID_SIZE
 #define EASY_MODE 20
 #define NORM_MODE 35
