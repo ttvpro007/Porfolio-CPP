@@ -5,15 +5,15 @@
 
 #define BOX_GRID_SIZE 3
 #define TABLE_GRID_SIZE BOX_GRID_SIZE * BOX_GRID_SIZE
-#define EASY_MODE 30
-#define NORM_MODE 45
-#define HARD_MODE 60
+#define EASY_MODE 20
+#define NORM_MODE 35
+#define HARD_MODE 65
 
 enum class EMode
 {
-	EASY,
-	NORMAL,
-	HARD
+	EASY = EASY_MODE,
+	NORMAL = NORM_MODE,
+	HARD = HARD_MODE
 };
 
 class FSudoku
@@ -51,5 +51,6 @@ public:
 	void Generate(EMode);
 	void PrintSudoku();
 	void PrintSolution();
+	void PrintGrid(char CharArray[TABLE_GRID_SIZE][TABLE_GRID_SIZE]);
 };
 

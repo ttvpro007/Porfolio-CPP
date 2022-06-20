@@ -20,7 +20,11 @@ void FSudoku::MakeBox()
 {
 	for (size_t i = 0; i < TABLE_GRID_SIZE; i++)
 	{
-		Box[i] = '0' + (i + 1);
+		if (i < 9)
+			Box[i] = '0' + (i + 1);
+		else
+			// support for larger dimension Sudoku... skip 7 characters in between numbers (0-9) to get alphabet (A-Z)
+			Box[i] = '0' + (i + 1 + 7);
 	}
 }
 
@@ -65,6 +69,8 @@ void FSudoku::FillDiagonal()
 
 bool FSudoku::FillTable(int Row, int Col)
 {
+	std::string a = "";
+
 	if (!hasBlankSpace())
 	{
 		return true;
@@ -138,9 +144,9 @@ bool FSudoku::IsUniqueInCol(int Col, char Num)
 
 bool FSudoku::IsUniqueInBox(int Row, int Col, char Num)
 {
-	for (size_t i = 0; i < BOX_GRID_SIZE; i++)
+	for (size_t i = '\0'; i < BOX_GRID_SIZE; i++)
 	{
-		for (size_t j = 0; j < BOX_GRID_SIZE; j++)
+		for (size_t j = '\0'; j < BOX_GRID_SIZE; j++)
 		{
 			if (Table[i + Row][j + Col] == Num)
 				return false;
@@ -196,65 +202,30 @@ void FSudoku::Generate(EMode Mode)
 	ShuffleBox();
 	FillTable(0, 0);
 
-	int NumbersToRemove = 0;
+	int numberToRemove = TABLE_GRID_SIZE * TABLE_GRID_SIZE * (int)Mode / 100;
 
-	switch (Mode)
-	{
-	case EMode::EASY:
-		NumbersToRemove = EASY_MODE;
-		break;
-	case EMode::NORMAL:
-		NumbersToRemove = NORM_MODE;
-		break;
-	case EMode::HARD:
-		NumbersToRemove = HARD_MODE;
-		break;
-	}
-
-	RemoveNumbers(NumbersToRemove);
+	RemoveNumbers(numberToRemove);
 }
 
 void FSudoku::PrintSudoku()
 {
-	for (size_t i = 0; i < TABLE_GRID_SIZE; i++)
-	{
-		if (i != 0 && i % BOX_GRID_SIZE == 0)
-		{
-			for (size_t i = 0; i < 2 * ((BOX_GRID_SIZE + 1) + TABLE_GRID_SIZE) - BOX_GRID_SIZE; i++)
-			{
-				std::cout << "=";
-			}
-
-			std::cout << std::endl;
-		}
-
-		for (size_t j = 0; j < TABLE_GRID_SIZE; j++)
-		{
-			if (j % BOX_GRID_SIZE == 0)
-				std::cout << "||";
-
-			if (BOX_GRID_SIZE - j % BOX_GRID_SIZE == 1)
-				std::cout << Table[i][j];
-			else
-				std::cout << Table[i][j] << ".";
-
-			if (j == TABLE_GRID_SIZE - 1)
-				std::cout << "||";
-		}
-
-		std::cout << std::endl;
-	}
+	PrintGrid(Table);
 }
 
 void FSudoku::PrintSolution()
+{
+	PrintGrid(Solution);
+}
+
+void FSudoku::PrintGrid(char CharArray[TABLE_GRID_SIZE][TABLE_GRID_SIZE])
 {
 	for (size_t i = 0; i < TABLE_GRID_SIZE; i++)
 	{
 		if (i != 0 && i % BOX_GRID_SIZE == 0)
 		{
-			for (size_t i = 0; i < 2 * ((BOX_GRID_SIZE + 1) + TABLE_GRID_SIZE) - BOX_GRID_SIZE; i++)
+			for (size_t i = 0; i < TABLE_GRID_SIZE * 2 + 1; i++)
 			{
-				std::cout << "=";
+				std::cout << "-";
 			}
 
 			std::cout << std::endl;
@@ -263,15 +234,18 @@ void FSudoku::PrintSolution()
 		for (size_t j = 0; j < TABLE_GRID_SIZE; j++)
 		{
 			if (j % BOX_GRID_SIZE == 0)
-				std::cout << "||";
+				std::cout << "|";
+
+			if (CharArray[i][j] == '\0')
+				std::cout << " ";
 
 			if (BOX_GRID_SIZE - j % BOX_GRID_SIZE == 1)
-				std::cout << Solution[i][j];
+				std::cout << CharArray[i][j];
 			else
-				std::cout << Solution[i][j] << ".";
+				std::cout << CharArray[i][j] << ".";
 
 			if (j == TABLE_GRID_SIZE - 1)
-				std::cout << "||";
+				std::cout << "|";
 		}
 
 		std::cout << std::endl;
