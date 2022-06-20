@@ -69,8 +69,6 @@ void FSudoku::FillDiagonal()
 
 bool FSudoku::FillTable(int Row, int Col)
 {
-	std::string a = "";
-
 	if (!hasBlankSpace())
 	{
 		return true;
@@ -84,7 +82,6 @@ bool FSudoku::FillTable(int Row, int Col)
 
 	for (size_t k = 0; k < TABLE_GRID_SIZE; k++)
 	{
-		//char num = '0' + (k + 1);
 		char num = Box[k];
 
 		if (CanUseNumber(Row, Col, num))
@@ -144,9 +141,9 @@ bool FSudoku::IsUniqueInCol(int Col, char Num)
 
 bool FSudoku::IsUniqueInBox(int Row, int Col, char Num)
 {
-	for (size_t i = '\0'; i < BOX_GRID_SIZE; i++)
+	for (size_t i = 0; i < BOX_GRID_SIZE; i++)
 	{
-		for (size_t j = '\0'; j < BOX_GRID_SIZE; j++)
+		for (size_t j = 0; j < BOX_GRID_SIZE; j++)
 		{
 			if (Table[i + Row][j + Col] == Num)
 				return false;
